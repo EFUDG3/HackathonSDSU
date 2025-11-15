@@ -1,5 +1,7 @@
 import Sidebar from "./components/Sidebar.tsx";
 import ChatDock from "./components/Chatdock.tsx";
+import Statcards from "./components/Statcard.tsx";
+
 import "./index.css";
 
 export default function App() {
@@ -12,6 +14,7 @@ export default function App() {
         </header>
         <section className="app-content">
           <p>Hello Club Officer!</p>
+          <Statcards />
         </section>
       </main>
       <ChatDock />

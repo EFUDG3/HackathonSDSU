@@ -15,12 +15,12 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSidebar = false }) => {
       <nav className="nav">
         <a href="/dashboard">Dashboard</a>
         <a href="/Club Funds">Funds</a>
-        <a href="/RSO Application">RSOApplication</a>
-        <a href="/Room Reservation">RoomReservation</a>
-        <a href="/Event Management">EventManagement</a>
-        <a href="/Club Management">ProjectManagement</a>
-        <a href="/Member Roster">MemberRoster</a>
-        <a href="/Resource Library">ResourceLibrary</a>
+        <a href="/RSO Application">RSO Application</a>
+        <a href="/Room Reservation">Room Reservation</a>
+        <a href="/Event Management">Event Management</a>
+        <a href="/Club Management">Project Management</a>
+        <a href="/Member Roster">Member Roster</a>
+        <a href="/Resource Library">Resource Library</a>
       </nav>
     </div>
   );
