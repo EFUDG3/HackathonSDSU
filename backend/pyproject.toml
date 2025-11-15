@@ -1,0 +1,10 @@
+[project]
+name = "hackathonsdsu"
+version = "0.1.0"
+description = "Python backend for our club officer dashboard"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.121.2",
+    "uvicorn>=0.38.0"
+]
