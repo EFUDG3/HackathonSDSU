@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 type SidebarProps = {
   /** whether the sidebar should have the "active" class */
@@ -9,18 +10,18 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSidebar = false }) => {
   return (
     <div id="sidebar" className={activeSidebar ? "active" : ""}>
       <div className="logo">
-        <a href="/">My Club Dashboard</a>
+        <Link to ="/">My Club Dashboard</Link>
       </div>
 
       <nav className="nav">
-        <a href="/dashboard">Dashboard</a>
-        <a href="/Club Funds">Funds</a>
-        <a href="/RSO Application">RSOApplication</a>
-        <a href="/Room Reservation">RoomReservation</a>
-        <a href="/Event Management">EventManagement</a>
-        <a href="/Club Management">ProjectManagement</a>
-        <a href="/Member Roster">MemberRoster</a>
-        <a href="/Resource Library">ResourceLibrary</a>
+        <Link to="/">Dashboard</Link>
+        <Link to="/Finance">Finance</Link>
+        <a href="/RSOApplication">RSO Application</a>
+        <a href="/RoomReservation">Room Reservation</a>
+        <a href="/EventManagement">Event Management</a>
+        <a href="/ClubManagement">Project Management</a>
+        <a href="/MemberRoster">Member Roster</a>
+        <Link to="/Resources">Resource Library</Link>
       </nav>
     </div>
   );
