@@ -6,6 +6,8 @@ from typing import Dict
 import os
 from dotenv import load_dotenv
 
+from app.services.ai_companion import query_supabase_rpc
+
 # --- App Initialization and Middleware ---
 app = FastAPI()
 
@@ -56,28 +58,27 @@ async def chat(chat_input: ChatInput):
     try:
 
         # _______ FOR RAG STUFF ______
-        # relevant_context = retrieve_relevant_docs(user_message)
 
-        # augmented_message = f"""
-        # Context from knowledge base:
-        # {relevant_context}
+        relevant_context, _ = query_supabase_rpc(user_message)
+
+        augmented_message = f"""
+        Context from knowledge base:
+        {relevant_context}
         
-        # User question: {user_message}
-        
-        # Please answer based on the context provided above.
+        Please answer based on the context and question provided above.
         # """
 
         if session_id not in chats:
             session = genai.GenerativeModel(MODEL_NAME).start_chat(
                 history=[
-                    {"role": "user", "parts": [{"text": "You are a helpful club assistant."}]},
+                    {"role": "system", "parts": [{"text": "You are a helpful club assistant."}]},
                     {"role": "model", "parts": [{"text": "Hi! I'm your club assistant. Ask me about finance policies, action items, or type 'help' for options."}]}
                 ]
             )
             chats[session_id] = session
         
         session = chats[session_id]
-        response = session.send_message(user_message) # send augmented message later for RAG
+        response = session.send_message(augmented_message) # send augmented message later for RAG
         
         return {"response": response.text}
     
