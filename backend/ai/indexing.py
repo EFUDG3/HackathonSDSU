@@ -41,6 +41,8 @@ def split_documents(documents: List[Document]) -> List[Document]:
     splitter = RecursiveCharacterTextSplitter(chunk_size=800, chunk_overlap=80, length_function=len)
     return splitter.split_documents(documents)
 
+
+# Index PDFs from data_dir into Supabase vector store
 def index_pdfs_to_supabase(data_dir: Path = DATA_PATH) -> int:
     docs = load_documents(data_dir)
     chunks = split_documents(docs)
