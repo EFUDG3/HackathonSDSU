@@ -1,31 +1,38 @@
-# this is to define configuration for the supabase client using pydantic
-from pydantic_settings import BaseSettings, SettingsConfigDict
+# app/config.py
 from functools import lru_cache
-import os
+from pathlib import Path
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import Field, AliasChoices
+
+# Resolve .env next to the backend root regardless of CWD
+# Assuming your tree is .../backend/.env and this file is .../backend/app/config.py
+BACKEND_ROOT = Path(__file__).resolve().parent.parent   # -> .../backend
+ENV_FILE = BACKEND_ROOT / ".env"
 
 class Settings(BaseSettings):
-    supabase_url: str
-    supabase_service_key: str
-
-    model_config = SettingsConfigDict(
-        env_file=".env",
-        env_file_encoding='utf-8'
+    # Required
+    supabase_url: str = Field(..., alias="SUPABASE_URL")
+    supabase_service_key: str = Field(
+        ...,
+        validation_alias=AliasChoices("SUPABASE_SERVICE_KEY", "SUPABASE_SERVICE_ROLE_KEY"),
     )
 
+    # Optional extras won’t crash things if present in .env
+    google_api_key: str | None = Field(None, alias="GOOGLE_API_KEY")
 
-# this helps reduce the function time of a commonly called function using memoization
+    model_config = SettingsConfigDict(
+        env_file=str(ENV_FILE),
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
+
 @lru_cache
-def get_settings():
+def get_settings() -> Settings:
     return Settings()
 
-
-# testing here
-# At the bottom of config.py temporarily
+# quick manual test
 if __name__ == "__main__":
-    settings = get_settings()
-    print(f"URL: {settings.supabase_url}")
-    print(f"Key: {settings.supabase_service_key[:10]}...")  # Only show first 10 chars
-
-
-
-
+    s = get_settings()
+    print(f"CWD-resilient env path: {ENV_FILE}")
+    print(f"URL: {s.supabase_url}")
+    print(f"Key: {s.supabase_service_key[:10]}...")
