@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import google.generativeai as genai
 from fastapi.middleware.cors import CORSMiddleware
+from app.routers import clubs, transactions, financials
 from typing import Dict
 import os
 from dotenv import load_dotenv
@@ -24,6 +25,16 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
+
+# Include routers
+app.include_router(clubs.router)
+app.include_router(financials.router)
+app.include_router(transactions.router)
+
+@app.get("/", tags=["root"])
+async def read_root() -> dict:
+    return {"message": "Welcome to your application!"}
+
 
 # --- Configuration & Model Initialization ---
 load_dotenv()  # Load environment variables from .env file
