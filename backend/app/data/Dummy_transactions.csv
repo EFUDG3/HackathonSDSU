@@ -1,0 +1,7 @@
+﻿id,club_id,amount,code,category,description,date,status,vendor,receipt_url,created_at
+550e8400-e29b-41d4-a716-446655440001,1,450,6413,Giveaway,Gift cards,11/10/25,approved,Amazon,https://receipts.example.com/r1234,2025-11-10T14:30:00Z
+550e8400-e29b-41d4-a716-446655440002,1,1200,3300,Donations,Fall semester membership dues,11/5/25,completed,N/A,N/A,2025-11-05T09:15:00Z
+550e8400-e29b-41d4-a716-446655440003,1,85.5,6413,Giveaway,Art supplies for workshop,11/12/25,pending,Michael's Crafts,https://receipts.example.com/r1235,2025-11-12T16:45:00Z
+550e8400-e29b-41d4-a716-446655440004,1,2500,3311,Fundraising,Annual charity gala proceeds,11/1/25,completed,N/A,N/A,2025-11-01T20:00:00Z
+550e8400-e29b-41d4-a716-446655440005,1,175,5520,Food,Lobster,11/8/25,approved,City Convention Center,https://receipts.example.com/r1236,2025-11-08T11:20:00Z
+550e8400-e29b-41d4-a716-446655440007,1,67.25,5520,Food,Pizza for team meeting,11/13/25,rejected,Domino's Pizza,https://receipts.example.com/r1237,2025-11-13T18:00:00Z

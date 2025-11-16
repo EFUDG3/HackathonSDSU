@@ -6,9 +6,12 @@ from app.crud.financials import financials_crud
 
 router = APIRouter(prefix="/financials", tags=["financials"])
 
-@router.get("/{clubs_id}", response_model=FinancialsResponse)
-async def get_club_financial_summary(clubs_id: int):
-    finances = await run_in_threadpool(financials_crud.get_by, "club_id", clubs_id)
+@router.get("/{club_id}", response_model=FinancialsResponse)
+async def get_club_financial_summary(club_id: int):
+    """
+    Get a single financial summary for a club (returns first match).
+    """
+    finances = await run_in_threadpool(financials_crud.get_by, "club_id", club_id)
 
     if finances is None:
         raise HTTPException(status_code=404, detail="Summary not found")
@@ -29,17 +32,24 @@ async def get_all_summaries_for_club(club_id: int):
 
 @router.post("/", response_model=FinancialsResponse)
 async def create_financial_summary(new_summary: FinancialsCreate):
+    """
+    Create a new financial summary record.
+    """
     created_summary = await run_in_threadpool(financials_crud.create, new_summary.model_dump())
 
     if created_summary is None:
-        raise HTTPException(status_code=500, detail="Failed to create club")
+        raise HTTPException(status_code=500, detail="Failed to create financial summary")
     return created_summary
 
-@router.patch("/{club_id}", response_model=FinancialsResponse)
-async def update_financial_summary(club_id: int, updates: FinancialsUpdate):
+@router.patch("/{financial_id}", response_model=FinancialsResponse)
+async def update_financial_summary(financial_id: str, updates: FinancialsUpdate):
+    """
+    Update fields of an existing financial summary.
+    Uses the financial record's UUID, not the club_id.
+    """
     updated = await run_in_threadpool(
-        financials_crud.update,
-        club_id,
+        financials_crud.update_by_uuid,
+        financial_id,
         updates.model_dump(exclude_unset=True)
     )
 
@@ -47,6 +57,18 @@ async def update_financial_summary(club_id: int, updates: FinancialsUpdate):
         raise HTTPException(status_code=404, detail="Financial summary not found")
 
     return updated
+
+@router.delete("/{financial_id}")
+async def delete_financial_summary(financial_id: str):
+    """
+    Delete a financial summary by its UUID.
+    """
+    deleted = await run_in_threadpool(financials_crud.delete, financial_id)
+
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Financial summary not found or could not be deleted")
+
+    return {"message": "Financial summary deleted successfully"}
 
 
 

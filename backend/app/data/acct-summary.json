@@ -140,8 +140,8 @@
     "period_2": {
         "period_info": {
             "start": "2025-07-01",
-            "end": null,
-            "label": "2025_Current"
+            "end": "2025-11-15",
+            "label": "2025-11-15"
         },
         "data": {
             "Revenue": [
