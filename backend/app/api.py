@@ -82,7 +82,7 @@ async def chat(chat_input: ChatInput):
         if session_id not in chats:
             session = genai.GenerativeModel(MODEL_NAME).start_chat(
                 history=[
-                    {"role": "system", "parts": [{"text": "You are a helpful club assistant."}]},
+                    {"role": "user", "parts": [{"text": "You are a helpful club assistant."}]},
                     {"role": "model", "parts": [{"text": "Hi! I'm your club assistant. Ask me about finance policies, action items, or type 'help' for options."}]}
                 ]
             )
@@ -98,11 +98,11 @@ async def chat(chat_input: ChatInput):
         raise HTTPException(status_code=500, detail=f"Error generating content: {e}")
     
 
-@app.get("/list-models", tags=["Test"])
-async def list_models():
-    try:
-        models = genai.list_models()
-        available = [m.name for m in models]
-        return {"models": available}
-    except Exception as e:
-        return {"error": str(e)}
+# @app.get("/list-models", tags=["Test"])
+# async def list_models():
+#     try:
+#         models = genai.list_models()
+#         available = [m.name for m in models]
+#         return {"models": available}
+#     except Exception as e:
+#         return {"error": str(e)}

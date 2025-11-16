@@ -15,7 +15,8 @@ from langchain_community.vectorstores import SupabaseVectorStore
 
 # --- Paths
 # Set this to the directory that CONTAINS your PDFs.
-DATA_PATH = "/Users/manav/Desktop/HackathonSDSU/backend/app/data"  # change to /backend/data if that's where the PDFs are
+#DATA_PATH = "/Users/manav/Desktop/HackathonSDSU/backend/app/data"  # change to /backend/data if that's where the PDFs are
+DATA_PATH = Path(__file__).resolve().parent.parent / "data"
 p = Path(DATA_PATH)
 
 print("Directory exists:", p.exists())
@@ -133,6 +134,6 @@ def query_supabase_rpc(query_text: str, k: int = 5):
     return prompt, docs
 
 # --- Example query
-q = "recognition requirements for student organizations; Starting the Student Organization Recognition Process; prerequisites; training; forms"
-prompt, results = query_supabase_rpc(q, k=3)
-print(prompt)
+# q = "recognition requirements for student organizations; Starting the Student Organization Recognition Process; prerequisites; training; forms"
+# prompt, results = query_supabase_rpc(q, k=3)
+# print(prompt)
