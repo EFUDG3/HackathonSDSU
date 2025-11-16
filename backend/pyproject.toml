@@ -7,4 +7,6 @@ requires-python = ">=3.13"
 dependencies = [
     "fastapi>=0.121.2",
     "uvicorn>=0.38.0"
+    "google-generativeai",
+    "python-dotenv",
 ]

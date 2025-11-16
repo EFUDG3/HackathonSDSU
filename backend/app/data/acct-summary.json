@@ -1,0 +1,278 @@
+{
+    "period_1": {
+        "period_info": {
+            "start": "2024-07-01",
+            "end": "2025-06-30",
+            "label": "2024_2025"
+        },
+        "data": {
+            "Revenue": [
+                {
+                    "code": "3981",
+                    "description": "Student Org - Cash Bal Fwd $",
+                    "value": "1,234.56"
+                },
+                {
+                    "code": "3271",
+                    "description": "Dues",
+                    "value": "0"
+                },
+                {
+                    "code": "3300",
+                    "description": "Donations",
+                    "value": "6,543.21"
+                },
+                {
+                    "code": "3311",
+                    "description": "Fundraising",
+                    "value": "0"
+                },
+                {
+                    "code": "3325",
+                    "description": "Sponsorship",
+                    "value": "0"
+                },
+                {
+                    "code": "3950",
+                    "description": "Miscellaneous Income",
+                    "value": "0"
+                }
+            ],
+            "Expenditures": [
+                {
+                    "code": "5000",
+                    "description": "Supplies",
+                    "value": ""
+                },
+                {
+                    "code": "5100",
+                    "description": "Dues/Subscriptions",
+                    "value": "0"
+                },
+                {
+                    "code": "5350",
+                    "description": "Copy charges",
+                    "value": "0"
+                },
+                {
+                    "code": "5375",
+                    "description": "Awards",
+                    "value": "0"
+                },
+                {
+                    "code": "5520",
+                    "description": "Food",
+                    "value": "400.00"
+                },
+                {
+                    "code": "5751",
+                    "description": "Uniforms",
+                    "value": "0"
+                },
+                {
+                    "code": "6025",
+                    "description": "Insurance",
+                    "value": "0"
+                },
+                {
+                    "code": "6125",
+                    "description": "Travel",
+                    "value": "0"
+                },
+                {
+                    "code": "6175",
+                    "description": "Social Activities",
+                    "value": "0"
+                },
+                {
+                    "code": "6200",
+                    "description": "Services",
+                    "value": "0"
+                },
+                {
+                    "code": "6250",
+                    "description": "Catering",
+                    "value": "0"
+                },
+                {
+                    "code": "6254",
+                    "description": "Facility Rental",
+                    "value": "0"
+                },
+                {
+                    "code": "6256",
+                    "description": "Parking fee",
+                    "value": "0"
+                },
+                {
+                    "code": "6400",
+                    "description": "Promotions",
+                    "value": "0"
+                },
+                {
+                    "code": "6413",
+                    "description": "Give away",
+                    "value": "200.00"
+                },
+                {
+                    "code": "6440",
+                    "description": "Donations",
+                    "value": "0"
+                },
+                {
+                    "code": "6490",
+                    "description": "Board relations",
+                    "value": "0"
+                },
+                {
+                    "code": "6497",
+                    "description": "Organization Relations",
+                    "value": "0"
+                },
+                {
+                    "code": "6151",
+                    "description": "Contracts",
+                    "value": "0"
+                }
+            ]
+        }
+    },
+    "period_2": {
+        "period_info": {
+            "start": "2025-07-01",
+            "end": null,
+            "label": "2025_Current"
+        },
+        "data": {
+            "Revenue": [
+                {
+                    "code": "3981",
+                    "description": "Student Org - Cash Bal Fwd $",
+                    "value": "5,792.49"
+                },
+                {
+                    "code": "3271",
+                    "description": "Dues",
+                    "value": "0"
+                },
+                {
+                    "code": "3300",
+                    "description": "Donations",
+                    "value": "0"
+                },
+                {
+                    "code": "3311",
+                    "description": "Fundraising",
+                    "value": "0"
+                },
+                {
+                    "code": "3325",
+                    "description": "Sponsorship",
+                    "value": "0"
+                },
+                {
+                    "code": "3950",
+                    "description": "Miscellaneous Income",
+                    "value": "0"
+                }
+            ],
+            "Expenditures": [
+                {
+                    "code": "5000",
+                    "description": "Supplies",
+                    "value": "0"
+                },
+                {
+                    "code": "5100",
+                    "description": "Dues/Subscriptions",
+                    "value": "0"
+                },
+                {
+                    "code": "5350",
+                    "description": "Copy charges",
+                    "value": "0"
+                },
+                {
+                    "code": "5375",
+                    "description": "Awards",
+                    "value": "0"
+                },
+                {
+                    "code": "5520",
+                    "description": "Food",
+                    "value": "0"
+                },
+                {
+                    "code": "5751",
+                    "description": "Uniforms",
+                    "value": "0"
+                },
+                {
+                    "code": "6025",
+                    "description": "Insurance",
+                    "value": "0"
+                },
+                {
+                    "code": "6125",
+                    "description": "Travel",
+                    "value": "0"
+                },
+                {
+                    "code": "6175",
+                    "description": "Social Activities",
+                    "value": "0"
+                },
+                {
+                    "code": "6200",
+                    "description": "Services",
+                    "value": "0"
+                },
+                {
+                    "code": "6250",
+                    "description": "Catering",
+                    "value": "0"
+                },
+                {
+                    "code": "6254",
+                    "description": "Facility Rental",
+                    "value": "0"
+                },
+                {
+                    "code": "6256",
+                    "description": "Parking fee",
+                    "value": "0"
+                },
+                {
+                    "code": "6400",
+                    "description": "Promotions",
+                    "value": "0"
+                },
+                {
+                    "code": "6413",
+                    "description": "Give away",
+                    "value": "0"
+                },
+                {
+                    "code": "6440",
+                    "description": "Donations",
+                    "value": "0"
+                },
+                {
+                    "code": "6490",
+                    "description": "Board relations",
+                    "value": "0"
+                },
+                {
+                    "code": "6497",
+                    "description": "Organization Relations",
+                    "value": "0"
+                },
+                {
+                    "code": "6151",
+                    "description": "Contracts",
+                    "value": "0"
+                }
+            ]
+        }
+    }
+}
