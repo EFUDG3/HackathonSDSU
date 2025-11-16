@@ -1,10 +1,11 @@
 # this is to define configuration for the supabase client using pydantic
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from functools import lru_cache
+import os
 
 class Settings(BaseSettings):
     supabase_url: str
-    supabase_key: str
+    supabase_service_key: str
 
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -17,12 +18,13 @@ class Settings(BaseSettings):
 def get_settings():
     return Settings()
 
+
 # testing here
 # At the bottom of config.py temporarily
 if __name__ == "__main__":
     settings = get_settings()
     print(f"URL: {settings.supabase_url}")
-    print(f"Key: {settings.supabase_key[:10]}...")  # Only show first 10 chars
+    print(f"Key: {settings.supabase_service_key[:10]}...")  # Only show first 10 chars
 
 
 

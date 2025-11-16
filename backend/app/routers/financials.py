@@ -1,99 +1,59 @@
 from fastapi import APIRouter, HTTPException
-from datetime import date, timedelta
-from decimal import Decimal
-from db import get_supabase
+# this will allow us to schedule the functions here on a separate thread
+from starlette.concurrency import run_in_threadpool
+from app.schemas.financials import FinancialsCreate, FinancialsResponse, FinancialsUpdate
+from app.crud.financials import financials_crud
 
-router = APIRouter(prefix='/financials', tags=['financials'])
+router = APIRouter(prefix="/financials", tags=["financials"])
 
-@router.get("/club/{club_id}/summary")
-async def get_club_summary(club_id: str):
+@router.get("/{clubs_id}", response_model=FinancialsResponse)
+async def get_club_financial_summary(clubs_id: int):
+    finances = await run_in_threadpool(financials_crud.get_by, "club_id", clubs_id)
+
+    if finances is None:
+        raise HTTPException(status_code=404, detail="Summary not found")
+    return finances
+
+@router.get("/all/{club_id}", response_model=list[FinancialsResponse])
+async def get_all_summaries_for_club(club_id: int):
     """
-    Get financial summary for a club within a date range.
-    Defaults to current month if no dates provided.
+    Return all financial summaries for a given club.
     """
+    summaries = await run_in_threadpool(financials_crud.list_by, "club_id", club_id)
 
-    supabase = get_supabase()
-    
-    # Get all transactions in the date range
-    response = supabase.table("transactions")\
-        .select("*")\
-        .eq("club_id", club_id)\
-        .execute()
-    
-    transactions = response.data
-    
-    # # Initialize counters
-    # summary = {
-    #     "revenue_donations": Decimal("0.00"),
-    #     "revenue_fundraising": Decimal("0.00"),
-    #     "revenue_sponsorship": Decimal("0.00"),
-    #     "expense_food": Decimal("0.00"),
-    #     "expense_giveaway": Decimal("0.00"),
-    #     "expense_uniforms": Decimal("0.00"),
-    # }
-    
-    # # Aggregate transactions
-    # for t in transactions:
-    #     amount = Decimal(str(t["amount"]))
-    #     subcategory = t.get("subcategory", "")
-        
-    #     if t["type"] == "income":
-    #         if subcategory == "donations":
-    #             summary["revenue_donations"] += amount
-    #         elif subcategory == "fundraising":
-    #             summary["revenue_fundraising"] += amount
-    #         elif subcategory == "sponsorship":
-    #             summary["revenue_sponsorship"] += amount
-        
-    #     elif t["type"] == "expense":
-    #         abs_amount = abs(amount)
-    #         if subcategory == "food":
-    #             summary["expense_food"] += abs_amount
-    #         elif subcategory == "travel":
-    #             summary["expense_travel"] += abs_amount
-    #         elif subcategory == "uniforms":
-    #             summary["expense_uniforms"] += abs_amount
-    
-    # Calculate totals
-    # total_revenue = (
-    #     summary["revenue_donations"] + 
-    #     summary["revenue_fundraising"] + 
-    #     summary["revenue_sponsorship"]
-    # )
-    
-    # total_expenses = (
-    #     summary["expense_food"] + 
-    #     summary["expense_travel"] + 
-    #     summary["expense_uniforms"]
-    # )
-    
-    # net_change = total_revenue - total_expenses
-    
-    # # Get current balance from clubs table
-    # club_response = supabase.table("clubs")\
-    #     .select("current_budget")\
-    #     .eq("id", club_id)\
-    #     .execute()
-    
-    # if not club_response.data:
-    #     raise HTTPException(status_code=404, detail="Club not found")
-    
-    # current_balance = Decimal(str(club_response.data[0]["current_budget"]))
-    
-    # return FinancialSummary(
-    #     period_start=start_date,
-    #     period_end=end_date,
-    #     revenue_donations=summary["revenue_donations"],
-    #     revenue_fundraising=summary["revenue_fundraising"],
-    #     revenue_sponsorship=summary["revenue_sponsorship"],
-    #     total_revenue=total_revenue,
-    #     expense_food=summary["expense_food"],
-    #     expense_travel=summary["expense_travel"],
-    #     expense_uniforms=summary["expense_uniforms"],
-    #     total_expenses=total_expenses,
-    #     net_change=net_change,
-    #     current_balance=current_balance
-    # )
+    if not summaries:
+        # optional, depending on your preference
+        raise HTTPException(status_code=404, detail="No financial summaries found for this club")
+
+    return summaries
+
+@router.post("/", response_model=FinancialsResponse)
+async def create_financial_summary(new_summary: FinancialsCreate):
+    created_summary = await run_in_threadpool(financials_crud.create, new_summary.model_dump())
+
+    if created_summary is None:
+        raise HTTPException(status_code=500, detail="Failed to create club")
+    return created_summary
+
+@router.patch("/{club_id}", response_model=FinancialsResponse)
+async def update_financial_summary(club_id: int, updates: FinancialsUpdate):
+    updated = await run_in_threadpool(
+        financials_crud.update,
+        club_id,
+        updates.model_dump(exclude_unset=True)
+    )
+
+    if updated is None:
+        raise HTTPException(status_code=404, detail="Financial summary not found")
+
+    return updated
+
+
+
+
+
+
+
 
 
 

@@ -1,65 +1,75 @@
 from fastapi import APIRouter, HTTPException
-from typing import List
-from db import get_supabase
-from models import TransactionsBase, TransactionsResponse
+from starlette.concurrency import run_in_threadpool
+from app.schemas.transactions import TransactionsCreate, TransactionsResponse, TransactionsUpdate
+from app.crud.transactions import transactions_crud
 
 router = APIRouter(prefix="/transactions", tags=["transactions"])
 
-@router.get("/club/{club_id}", response_model=List[TransactionsResponse])
-async def get_club_transactions(club_id: str, limit: int = 50):
-    supabase = get_supabase()
-    response = supabase.table("transactions")\
-        .select("*")\
-        .eq("club_id", club_id)\
-        .order("date", desc=True)\
-        .limit(limit)\
-        .execute()
-    
-    return response.data
+@router.get("/club/{club_id}", response_model=list[TransactionsResponse])
+async def get_transactions_for_club(club_id: int):
+    """
+    Get all transactions belonging to a specific club.
+    """
+    transactions = await run_in_threadpool(transactions_crud.list_by, "club_id", club_id)
 
-@router.post("/club/{club_id}", response_model=TransactionsResponse)
-async def create_transaction(club_id: str, transaction: TransactionsBase):
-    supabase = get_supabase()
-    
-    # Insert transaction
-    transaction_data = transaction.model_dump()
-    transaction_data["club_id"] = club_id
-    
-    response = supabase.table("transactions").insert(transaction_data).execute()
-    
-    # Update club budget
-    supabase.rpc("update_club_budget", {
-        "club_id": club_id,
-        "amount": float(transaction.amount)
-    }).execute()
-    
-    return response.data[0]
+    if not transactions:
+        raise HTTPException(status_code=404, detail="No transactions found for this club")
 
-# @router.get("/stats/{club_id}")
-# async def get_transaction_stats(club_id: str):
-#     supabase = get_supabase()
-    
-#     # Get all transactions for the club
-#     response = supabase.table("transactions")\
-#         .select("amount, type, category, date")\
-#         .eq("club_id", club_id)\
-#         .execute()
-    
-#     transactions = response.data
-    
-#     # Calculate stats
-#     total_expenses = sum(float(t["amount"]) for t in transactions if t["type"] == "expense")
-#     total_income = sum(float(t["amount"]) for t in transactions if t["type"] == "income")
-    
-#     # Group by category
-#     by_category = {}
-#     for t in transactions:
-#         cat = t.get("category", "other")
-#         by_category[cat] = by_category.get(cat, 0) + abs(float(t["amount"]))
-    
-#     return {
-#         "total_expenses": total_expenses,
-#         "total_income": total_income,
-#         "by_category": by_category,
-#         "transaction_count": len(transactions)
-#     }
+    return transactions
+
+
+@router.get("/{transaction_id}", response_model=TransactionsResponse)
+async def get_transaction(transaction_id: str):
+    """
+    Retrieve a single transaction by its ID.
+    """
+    transaction = await run_in_threadpool(transactions_crud.get_by, "id", transaction_id)
+
+    if transaction is None:
+        raise HTTPException(status_code=404, detail="Transaction not found")
+
+    return transaction
+
+
+@router.post("/", response_model=TransactionsResponse)
+async def create_transaction(new_transaction: TransactionsCreate):
+    """
+    Create a new transaction.
+    """
+    created = await run_in_threadpool(transactions_crud.create, new_transaction.model_dump())
+
+    if created is None:
+        raise HTTPException(status_code=500, detail="Failed to create transaction")
+
+    return created
+
+
+@router.patch("/{transaction_id}", response_model=TransactionsResponse)
+async def update_transaction(transaction_id: int, updates: TransactionsUpdate):
+    """
+    Update fields of an existing transaction.
+    """
+    updated = await run_in_threadpool(
+        transactions_crud.update,
+        transaction_id,
+        updates.model_dump(exclude_unset=True)
+    )
+
+    if updated is None:
+        raise HTTPException(status_code=404, detail="Transaction not found")
+
+    return updated
+
+
+# not sure if we would have to reflect the actual budget
+@router.delete("/{transaction_id}")
+async def delete_transaction(transaction_id: int):
+    """
+    Delete a transaction by its ID.
+    """
+    deleted = await run_in_threadpool(transactions_crud.delete, transaction_id)
+
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Transaction not found or could not be deleted")
+
+    return {"message": "Transaction deleted successfully"}
