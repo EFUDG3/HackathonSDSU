@@ -1,23 +1,27 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Sidebar from "./components/Sidebar.tsx";
 import ChatDock from "./components/Chatdock.tsx";
-import Statcards from "./components/Statcard.tsx";
+import Dashboard from "./Pages/Dashboard.tsx";
+import Finance from "./Pages/Finance.tsx";
+import Resources from "./Pages/Resources.tsx";
 
 import "./index.css";
 
 export default function App() {
   return (
+    <BrowserRouter>
     <div className="app-layout">
       <Sidebar activeSidebar={true} />
       <main className="app-main">
-        <header className="app-topbar">
-          <h1>Dashboard</h1>
-        </header>
-        <section className="app-content">
-          <p>Hello Club Officer!</p>
-          <Statcards />
-        </section>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/Dashboard" element={<Dashboard />} />
+          <Route path="/Finance" element={<Finance />} />
+          <Route path="/Resources" element={<Resources />} />
+        </Routes>
       </main>
       <ChatDock />
     </div>
+    </BrowserRouter>
   );
 }
