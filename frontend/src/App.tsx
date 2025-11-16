@@ -1,35 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Sidebar from "./components/Sidebar.tsx";
+import ChatDock from "./components/Chatdock.tsx";
+import Dashboard from "./Pages/Dashboard.tsx";
+import Finance from "./Pages/Finance.tsx";
+import Resources from "./Pages/Resources.tsx";
 
-function App() {
-  const [count, setCount] = useState(0)
+import "./index.css";
 
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <BrowserRouter>
+    <div className="app-layout">
+      <Sidebar activeSidebar={true} />
+      <main className="app-main">
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/Dashboard" element={<Dashboard />} />
+          <Route path="/Finance" element={<Finance />} />
+          <Route path="/Resources" element={<Resources />} />
+        </Routes>
+      </main>
+      <ChatDock />
+    </div>
+    </BrowserRouter>
+  );
 }
-
-export default App
