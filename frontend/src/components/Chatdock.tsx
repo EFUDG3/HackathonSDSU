@@ -6,12 +6,11 @@ interface Message {
   text: string;
 }
 
-// Simple ID generator for demonstration purposes. In a real app, use useId() or crypto.randomUUID()
 const generateSessionId = () => `chat-session-${Date.now()}`;
 
 export default function ChatDock() {
-  const [open, setOpen] = useState(true);
-  const sessionId = useMemo(generateSessionId, []); // Ensures ID is only created once
+  const [open, setOpen] = useState(false);
+  const sessionId = useMemo(generateSessionId, []); // Ensures ID is created once
   const [messages, setMessages] = useState<Message[]>([
     { type: "bot", text: "Hi! I'm your club assistant. Ask me about finance policies, action items, or type 'help' for options." }
   ]);

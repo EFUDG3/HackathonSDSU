@@ -4,7 +4,8 @@ import ChatDock from "./components/Chatdock.tsx";
 import Dashboard from "./Pages/Dashboard.tsx";
 import Finance from "./Pages/Finance.tsx";
 import Resources from "./Pages/Resources.tsx";
-import Forms from "./Pages/Forms.tsx";
+import Roster from "./Pages/Roster.tsx";
+
 
 import "./index.css";
 
@@ -19,7 +20,7 @@ export default function App() {
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Finance" element={<Finance />} />
           <Route path="/Resources" element={<Resources />} />
-          <Route path="/Forms" element={<Forms />} />
+          <Route path="/Roster" element={<Roster />} />
         </Routes>
       </main>
       <ChatDock />
