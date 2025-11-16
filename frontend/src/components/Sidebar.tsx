@@ -16,11 +16,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSidebar = false }) => {
       <nav className="nav">
         <Link to="/">Dashboard</Link>
         <Link to="/Finance">Finance</Link>
-        <a href="/RSOApplication">RSO Application</a>
-        <a href="/RoomReservation">Room Reservation</a>
-        <a href="/EventManagement">Event Management</a>
-        <a href="/ClubManagement">Project Management</a>
-        <a href="/MemberRoster">Member Roster</a>
+        <Link to="/Forms">All Forms</Link>
         <Link to="/Resources">Resource Library</Link>
       </nav>
     </div>
