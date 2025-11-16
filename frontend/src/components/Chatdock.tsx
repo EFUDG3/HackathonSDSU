@@ -105,11 +105,7 @@ export default function ChatDock() {
         borderBottom: '1px solid #374151',
         flexShrink: 0
       }}>
-<<<<<<< HEAD
-        {open && <strong style={{fontSize: '16px', letterSpacing: '0.5px'}}>🤖 AI Assistant</strong>}
-=======
         {open && <strong>Assistant</strong>}
->>>>>>> d3d9a892acab405ebbe33f0c1de0cb50259da0e0
         <button 
           onClick={() => setOpen(v => !v)} 
           aria-label="Toggle chat"
